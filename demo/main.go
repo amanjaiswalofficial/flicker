@@ -7,7 +7,7 @@ import (
 
 func main(){
 	flicker := session.Flicker()
-	sourceFilePath := "path_to_amazon_review_dataset.csv"
+	sourceFilePath := "..\\archive\\data.csv"
 	fdf := flicker.Read("local").Format("csv").Option("path", sourceFilePath).Load()
 	fdf = fdf.Filter("fdf.star_rating >= 4")
 	aggCondition := map[string]interface{}{"star_rating": "avg", "helpful_votes": "sum"}

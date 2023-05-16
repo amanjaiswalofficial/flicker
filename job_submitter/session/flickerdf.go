@@ -3,10 +3,12 @@ package session
 import (
     "fmt"
     "github.com/go-gota/gota/dataframe"
+    "job_submitter/job"
 )
 
 type flickerdf struct {
     df dataframe.DataFrame
+    sourceInfo map[string]string
     taskSet []map[string]interface{}
     Write flickerdfWriter
 }
@@ -59,19 +61,18 @@ func (fdf flickerdf) WithColumnRenamed(oldColumnName string, newColumnName strin
     return fdf
 }
 
-func (fdf flickerdf) Execute() (bool, error){
-    /*
-    Do the whole job execution
-    */
-    fmt.Println("Submitting job for execution")
-    fmt.Println("Job finished post execution")
-    return true, nil
-}
-
 func (fdf flickerdf) PrintTaskSet() {
     for _, value := range fdf.taskSet {
         for key, val := range value {
             fmt.Println(key, val)
         }
     }
+}
+
+func (fdf flickerdf) Execute() (bool, error){
+    
+    jobJSONPath := ConvertJobToJSON(fdf)
+    jobRunner := job.Initialize(jobJSONPath)
+    jobRunner.Execute()
+    return true, nil
 }

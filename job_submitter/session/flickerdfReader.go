@@ -43,6 +43,11 @@ func (fdR flickerdfReader) Load() flickerdf {
 
        df := dataframe.ReadCSV(f)
        fdf.df= df
+       fdf.sourceInfo = map[string]string{
+        "format": fdR.format,
+        "sourceType": fdR.sourceType,
+        "path": readPath,
+       }
     }   
     return fdf
 }
