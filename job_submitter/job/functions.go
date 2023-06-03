@@ -59,13 +59,14 @@ func (jctrlr jobController) Execute() {
 	// Read the data into a dataframe
 	df := dataframe.ReadCSV(f)
 	totalRecords := len(df.Records())
-	availableNodes := 3 // TODO: get this from some configuration
+	
+	executors := getExecutorConfiguration()
+	availableNodes := len(executors.Config)
 	rowsPerExecutor := getRowsPerExecutor(totalRecords, availableNodes)
-	fmt.Println(len(rowsPerExecutor), "executors with rows", rowsPerExecutor, "are working on it....")
+	executorsRef := &executors
+	executorsRef.attachSourceInformation(jctrlr.SourceInfo["path"], rowsPerExecutor)
 	/*
 		Remaining code coming soon....
-		1. Get details of all executor nodes
-		2. Pass the detail of rowsPerExecutor as well as information on what to read from the source
 		3. Keep waiting for incoming message from the broker, sent by executor node
 		4. Perform the required message forwarding from one executor to other executors as required
 		5. Until receiving a message of job completion, continue doing steps 3-4
