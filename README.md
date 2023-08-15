@@ -1,6 +1,6 @@
 # flicker
 
-Roadmap
+## Roadmap
 ### Components of framework
 1. Cluster Manager: A simple cluster manager that can discover and manage nodes in the cluster. This could be done using a simple peer-to-peer network or a centralized configuration file.
 
