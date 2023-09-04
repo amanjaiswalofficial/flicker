@@ -64,3 +64,4 @@
     The job scheduler receives completion messages from all the executors.
     The job scheduler aggregates the completion messages to determine if the job completed successfully.
     If the job completed successfully, the job scheduler notifies the user and returns the final output
+
